@@ -1,4 +1,6 @@
+using Jalasoft.Interns.Repository.Books;
 using Jalasoft.Interns.Repository.Employees;
+using Jalasoft.Interns.Service.Books;
 using Jalasoft.Interns.Service.Employees;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
 
@@ -35,4 +37,7 @@ static void ConfigureIoC(IServiceCollection services)
 {
     services.AddScoped<IEmployeeService, EmployeeService>();
     services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+
+    services.AddScoped<IBookService, BookService>();
+    services.AddSingleton<IBookRepository, BookRepository>();
 }
