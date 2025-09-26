@@ -34,5 +34,5 @@ app.Run();
 static void ConfigureIoC(IServiceCollection services)
 {
     services.AddScoped<IEmployeeService, EmployeeService>();
-    services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+    services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 }

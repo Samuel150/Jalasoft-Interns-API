@@ -1,4 +1,6 @@
 ﻿using InternsAPI.Controllers;
+using Jalasoft.Interns.API.Adapter;
+using Jalasoft.Interns.API.Requests.Employees;
 using Jalasoft.Interns.Service.Employees;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,15 @@ namespace Jalasoft.Interns.API.Controllers
             logger.Log(LogLevel.Information, "Retrieving Employees");
             var employees = employeeService.RetrieveEmployees(active);
             return Ok(employees);
+        }
+
+
+        [HttpPost]
+        public IActionResult PostEmployee([FromBody] PostEmpoyeeRequest request)
+        {
+            logger.Log(LogLevel.Information, "Create Employees");
+            var employeeCreated = employeeService.CreateEmployee(EmployeeAdapter.PostEmployeeRequestToEmployee(request));
+            return Created("", EmployeeAdapter.EmployeeToPostEmployeeResponse(employeeCreated));
         }
     }
 }
