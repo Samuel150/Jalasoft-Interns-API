@@ -1,4 +1,8 @@
+using Jalasoft.Interns.API.Adapter;
+using Jalasoft.Interns.Repository.Cities;
 using Jalasoft.Interns.Repository.Employees;
+using Jalasoft.Interns.Service.Cities.Concretes;
+using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Employees;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
 
@@ -35,4 +39,8 @@ static void ConfigureIoC(IServiceCollection services)
 {
     services.AddScoped<IEmployeeService, EmployeeService>();
     services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+
+    services.AddScoped<ICityService, CityService>();
+    services.AddSingleton<ICityRepository, CityRepository>();
+    services.AddScoped<ICityAdapter, CityAdapter>();
 }
