@@ -34,15 +34,15 @@ namespace InternsAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(int id, [FromBody] PostBookRequest request)
+        public IActionResult UpdateBook(int id, [FromBody] PutBookRequest request)
         {
             logger.Log(LogLevel.Information, $"Updating Book with ID {id}");
 
-            var bookToUpdate = BookAdapter.PostBookRequestToBook(request);
+            var bookToUpdate = BookAdapter.PutBookRequestToBook(request);
             bookToUpdate.Id = id;
 
             var updatedBook = bookService.UpdateBook(bookToUpdate);
-            return Ok(BookAdapter.BookToPostBookResponse(updatedBook));
+            return Ok(BookAdapter.BookToPutBookResponse(updatedBook));
         }
     }
 }
