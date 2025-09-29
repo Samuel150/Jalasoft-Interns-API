@@ -39,6 +39,7 @@ static void ConfigureIoC(IServiceCollection services)
 {
     services.AddScoped<IEmployeeService, EmployeeService>();
     services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+    services.AddScoped<IEmployeeAdapter, EmployeeAdapter>();
 
     services.AddScoped<ICityService, CityService>();
     services.AddSingleton<ICityRepository, CityRepository>();

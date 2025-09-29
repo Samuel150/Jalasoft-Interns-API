@@ -4,9 +4,16 @@ using Jalasoft.Interns.Service.Domain.Employees;
 
 namespace Jalasoft.Interns.API.Adapter
 {
-    public static class EmployeeAdapter
+    public interface IEmployeeAdapter
     {
-        public static Employee PostEmployeeRequestToEmployee(PostEmpoyeeRequest request)
+        public Employee PostEmployeeRequestToEmployee(PostEmpoyeeRequest request);
+
+        public PostEmployeeResponse EmployeeToPostEmployeeResponse(Employee employee);
+    }
+
+    public class EmployeeAdapter : IEmployeeAdapter
+    {
+        public Employee PostEmployeeRequestToEmployee(PostEmpoyeeRequest request)
         {
             return new Employee()
             {
@@ -18,7 +25,7 @@ namespace Jalasoft.Interns.API.Adapter
             };
         }
 
-        public static PostEmployeeResponse EmployeeToPostEmployeeResponse(Employee employee)
+        public PostEmployeeResponse EmployeeToPostEmployeeResponse(Employee employee)
         {
             return new PostEmployeeResponse()
             {

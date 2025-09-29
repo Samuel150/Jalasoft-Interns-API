@@ -8,7 +8,10 @@ namespace Jalasoft.Interns.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmployeesController(ILogger<BooksController> logger, IEmployeeService employeeService) : ControllerBase
+    public class EmployeesController(
+        ILogger<BooksController> logger,
+        IEmployeeService employeeService,
+        IEmployeeAdapter employeeAdapter) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetEmployees([FromQuery] bool active)
@@ -23,8 +26,8 @@ namespace Jalasoft.Interns.API.Controllers
         public IActionResult PostEmployee([FromBody] PostEmpoyeeRequest request)
         {
             logger.Log(LogLevel.Information, "Create Employees");
-            var employeeCreated = employeeService.CreateEmployee(EmployeeAdapter.PostEmployeeRequestToEmployee(request));
-            return Created("", EmployeeAdapter.EmployeeToPostEmployeeResponse(employeeCreated));
+            var employeeCreated = employeeService.CreateEmployee(employeeAdapter.PostEmployeeRequestToEmployee(request));
+            return Created("", employeeAdapter.EmployeeToPostEmployeeResponse(employeeCreated));
         }
     }
 }
