@@ -43,7 +43,7 @@ namespace Jalasoft.Interns.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutCity([FromBody] UpdateCityDto request, [FromQuery] int id)
+        public IActionResult PutCity([FromBody] UpdateCityDto request, int id)
         {
             logger.Log(LogLevel.Information, "Updated Cities");
             var newCity = cityAdapter.AdaptUpdateCityToCity(request);
