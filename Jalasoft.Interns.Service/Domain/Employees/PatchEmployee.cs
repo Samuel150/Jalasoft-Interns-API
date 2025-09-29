@@ -10,6 +10,14 @@
 
         public string Email { get; set; }
 
+        [InmutableProperty]
         public bool Active { get; set; }
+
+        public Address Address { get; set; } = new Address();
+    }
+
+    public class Address
+    {
+        public string City { get; set; }
     }
 }

@@ -12,7 +12,11 @@ namespace Jalasoft.Interns.Service.PatchHelpers
                 Email = employee.Email,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                Name = employee.Name
+                Name = employee.Name,
+                Address = new Address()
+                {
+                    City = employee.Address?.City
+                }
             };
         }
 
@@ -25,7 +29,11 @@ namespace Jalasoft.Interns.Service.PatchHelpers
                 LastName = employeePatch.LastName,
                 Active = employeePatch.Active,
                 Email = employeePatch.Email,
-                Id = Id
+                Id = Id,
+                Address = new Address()
+                {
+                    City = employeePatch.Address?.City
+                }
             };
         }
     }

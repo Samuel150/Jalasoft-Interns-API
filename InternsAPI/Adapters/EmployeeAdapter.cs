@@ -36,7 +36,11 @@ namespace Jalasoft.Interns.API.Adapter
                 Email = employee.Email,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
-                Name = employee.Name
+                Name = employee.Name,
+                Address = new Address()
+                {
+                    City = employee.Address?.City
+                }
             };
         }
 

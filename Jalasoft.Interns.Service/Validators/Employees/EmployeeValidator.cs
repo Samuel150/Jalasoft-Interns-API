@@ -9,6 +9,12 @@ namespace Jalasoft.Interns.Service.Validators.Employees
         {
             RuleFor(x => x.Name)
                 .Length(2, 16);
+
+            RuleFor(x => x.Email)
+                .Custom((employee, contexto) =>
+                {
+                    
+                });
         }
     }
 }

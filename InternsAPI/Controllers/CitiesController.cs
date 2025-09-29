@@ -42,8 +42,7 @@ namespace Jalasoft.Interns.API.Controllers
             return Created("", cityAdapter.AdaptCityToCityDto(createdCity));
         }
 
-        [HttpPut]
-        [Route("{id}")]
+        [HttpPut("{id}")]
         public IActionResult PutCity([FromBody] UpdateCityDto request, [FromQuery] int id)
         {
             logger.Log(LogLevel.Information, "Updated Cities");
