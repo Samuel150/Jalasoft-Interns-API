@@ -34,7 +34,7 @@ namespace Jalasoft.Interns.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostCity([FromBody] CreateCityDto request)
+        public IActionResult PostCity([FromBody] CreateCityRequestDto request)
         {
             logger.Log(LogLevel.Information, "Create Cities");
             var newCity = cityAdapter.AdaptCreateCityDtoToCity(request);
@@ -43,7 +43,7 @@ namespace Jalasoft.Interns.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutCity([FromBody] UpdateCityDto request, int id)
+        public IActionResult PutCity([FromBody] UpdateCityRequestDto request, int id)
         {
             logger.Log(LogLevel.Information, "Updated Cities");
             var newCity = cityAdapter.AdaptUpdateCityToCity(request);

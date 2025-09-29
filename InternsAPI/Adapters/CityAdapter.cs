@@ -6,15 +6,15 @@ namespace Jalasoft.Interns.API.Adapter
 {
     public interface ICityAdapter
     {
-        public City AdaptCityDtoToCity(CityDto city);
-        public CityDto AdaptCityToCityDto(City city);
-        public City AdaptUpdateCityToCity(UpdateCityDto city);
-        public City AdaptCreateCityDtoToCity(CreateCityDto city);
+        public City AdaptCityDtoToCity(CityResponseDto city);
+        public CityResponseDto AdaptCityToCityDto(City city);
+        public City AdaptUpdateCityToCity(UpdateCityRequestDto city);
+        public City AdaptCreateCityDtoToCity(CreateCityRequestDto city);
 
     }
     public class CityAdapter : ICityAdapter
     {
-        public City AdaptCityDtoToCity(CityDto city)
+        public City AdaptCityDtoToCity(CityResponseDto city)
         {
             return new City()
             {
@@ -24,12 +24,13 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist= city.Capitalist,
+                Hospitals = city.Hospitals,
             };
         }
 
-        public CityDto AdaptCityToCityDto(City city)
+        public CityResponseDto AdaptCityToCityDto(City city)
         {
-            return new CityDto()
+            return new CityResponseDto()
             {
                 Id = city.Id,
                 Name = city.Name,
@@ -37,9 +38,10 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = city.Hospitals,
             };
         }
-        public City AdaptCreateCityDtoToCity(CreateCityDto city)
+        public City AdaptCreateCityDtoToCity(CreateCityRequestDto city)
         {
             return new City()
             {
@@ -48,10 +50,12 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = Enumerable.Empty<Hospital>(),
+
             };
         }
 
-        public City AdaptUpdateCityToCity(UpdateCityDto city)
+        public City AdaptUpdateCityToCity(UpdateCityRequestDto city)
         {
             return new City()
             {
@@ -60,6 +64,7 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = city.Hospitals,
             };
         }
     }

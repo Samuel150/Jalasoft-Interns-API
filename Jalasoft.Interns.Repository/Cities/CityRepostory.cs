@@ -10,8 +10,18 @@ namespace Jalasoft.Interns.Repository.Cities
 {
     public class CityRepository : ICityRepository
     {
-        private readonly Dictionary<int, City> _cities = new Dictionary<int, City>();
-        private int _nextId = 0;
+        private readonly Dictionary<int, City> _cities = new Dictionary<int, City>()
+        {
+            {1, new City() {Name = "Cochabamba", GPD=1000, Country="Bolivia", Capital="Cochabamba", Capitalist= true, Hospitals = [
+                new Hospital(){Id=1, Name="Viedma", Address= "Av. Suecia"},
+                new Hospital(){Id=1, Name="Alamo", Address= "Av. Suecia 2"},
+                ] } },
+            {2, new City() {Name = "Tarija", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true, Hospitals = [
+                new Hospital(){Id=1, Name="Viedma Tarija", Address= "Av. Suecia"},
+                ] } },
+            {3, new City() {Name = "Pando", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true}}
+        };
+        private int _nextId = 3;
         public City Create(City city)
         {
             city.Id = ++_nextId;
@@ -42,6 +52,7 @@ namespace Jalasoft.Interns.Repository.Cities
                 foudCity.Capital = city.Capital;
                 foudCity.GPD = city.GPD;
                 foudCity.Country = city.Country;
+                foudCity.Hospitals = city.Hospitals;
                 return foudCity;
             }
             return null;
