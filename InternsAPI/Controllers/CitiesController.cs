@@ -11,39 +11,44 @@ namespace Jalasoft.Interns.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CitiesController(ILogger<CitiesController> _logger, ICityAdapter _cityAdapter, ICityService _cityService) : ControllerBase
+    public class CitiesController(
+        ILogger<CitiesController> logger,
+        ICityAdapter cityAdapter,
+        ICityService cityService) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetCitites([FromQuery] bool capitalist)
         {
-            _logger.Log(LogLevel.Information, "Retrieving Cities");
-            var cities = _cityService.GetAll(capitalist);
+            logger.Log(LogLevel.Information, "Retrieving Cities");
+            var cities = cityService.GetAll(capitalist);
             return Ok(cities);
         }
-        [HttpGet("/{id}")]
+
+        [HttpGet]
+        [Route("{id}")]
         public IActionResult GetCity(int id)
         {
-            _logger.Log(LogLevel.Information, "Retrieving City");
-            var city = _cityService.GetById(id);
-            return Ok(_cityAdapter.AdaptCityToCityDto(city));
+            logger.Log(LogLevel.Information, "Retrieving City");
+            var city = cityService.GetById(id);
+            return Ok(cityAdapter.AdaptCityToCityDto(city));
         }
 
         [HttpPost]
         public IActionResult PostCity([FromBody] CreateCityDto request)
         {
-            _logger.Log(LogLevel.Information, "Create Cities");
-            var newCity = _cityAdapter.AdaptCreateCityDtoToCity(request);
-            var createdCity = _cityService.Create(newCity);
-            return Created("", _cityAdapter.AdaptCityToCityDto(createdCity));
+            logger.Log(LogLevel.Information, "Create Cities");
+            var newCity = cityAdapter.AdaptCreateCityDtoToCity(request);
+            var createdCity = cityService.Create(newCity);
+            return Created("", cityAdapter.AdaptCityToCityDto(createdCity));
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult PutCity([FromBody] UpdateCityDto request, [FromQuery] int id)
         {
-            _logger.Log(LogLevel.Information, "Updated Cities");
-            var newCity = _cityAdapter.AdaptUpdateCityToCity(request);
-            var updatedCity = _cityService.Update(id, newCity);
-            return Ok(_cityAdapter.AdaptCityToCityDto(updatedCity));
+            logger.Log(LogLevel.Information, "Updated Cities");
+            var newCity = cityAdapter.AdaptUpdateCityToCity(request);
+            var updatedCity = cityService.Update(id, newCity);
+            return Ok(cityAdapter.AdaptCityToCityDto(updatedCity));
         }
     }
 }

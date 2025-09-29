@@ -8,7 +8,7 @@ namespace Jalasoft.Interns.Repository.Employees
         private List<Employee> Employees = new List<Employee>() { 
             new Employee() { Active = true, Email = "samuel@gmail.com", FirstName="Pablo", Id = 1, LastName = "Paramo", Name = "Samuel"},
             new Employee() { Active = true, Email = "ana@gmail.com", FirstName="Eunice", Id = 2, LastName = "Rivero", Name = "Ana"},
-            new Employee() { Active = false, Email = "pedro@gmail.com", FirstName="Pedro", Id = 3, LastName = "Torrez", Name = "Gonzalo"}
+            new Employee() { Active = false, Email = "pedro@gmail.com", FirstName="Pedro", Id = 3, LastName = "Torrez", Name = "Gonzalo", Address = new Address()}
         };
 
         public Employee CreateEmployee(Employee employee)
@@ -17,6 +17,8 @@ namespace Jalasoft.Interns.Repository.Employees
             Employees.Add(employee);
             return employee;
         }
+
+        public Employee? RetrieveEmployee(int employeeId) => Employees.FirstOrDefault(employee => employee.Id == employeeId);
 
         public IEnumerable<Employee> RetrieveEmployees(bool active)
         {
