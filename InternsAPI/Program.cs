@@ -5,12 +5,14 @@ using Jalasoft.Interns.Service.Cities.Concretes;
 using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Employees;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
+using Jalasoft.Interns.Service.Validators.Employees;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,6 +42,7 @@ static void ConfigureIoC(IServiceCollection services)
     services.AddScoped<IEmployeeService, EmployeeService>();
     services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
     services.AddScoped<IEmployeeAdapter, EmployeeAdapter>();
+    services.AddScoped<EmployeeValidator>();
 
     services.AddScoped<ICityService, CityService>();
     services.AddSingleton<ICityRepository, CityRepository>();

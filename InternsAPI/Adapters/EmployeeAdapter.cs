@@ -1,5 +1,5 @@
 ﻿using Jalasoft.Interns.API.Requests.Employees;
-using Jalasoft.Interns.API.Responses;
+using Jalasoft.Interns.API.Responses.Employees;
 using Jalasoft.Interns.Service.Domain.Employees;
 
 namespace Jalasoft.Interns.API.Adapter
@@ -9,6 +9,8 @@ namespace Jalasoft.Interns.API.Adapter
         public Employee PostEmployeeRequestToEmployee(PostEmpoyeeRequest request);
 
         public PostEmployeeResponse EmployeeToPostEmployeeResponse(Employee employee);
+
+        public Employee PatchEmployeeToEmployee(PatchEmployee patchEmployee);
     }
 
     public class EmployeeAdapter : IEmployeeAdapter
@@ -35,6 +37,18 @@ namespace Jalasoft.Interns.API.Adapter
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Name = employee.Name
+            };
+        }
+
+        public Employee PatchEmployeeToEmployee(PatchEmployee patchEmployee)
+        {
+            return new Employee()
+            {
+                Active = patchEmployee.Active,
+                Email = patchEmployee.Email,
+                FirstName = patchEmployee.FirstName,
+                LastName = patchEmployee.LastName,
+                Name = patchEmployee.Name
             };
         }
     }

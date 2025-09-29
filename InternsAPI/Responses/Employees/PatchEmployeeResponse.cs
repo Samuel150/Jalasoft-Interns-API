@@ -1,6 +1,6 @@
-﻿namespace Jalasoft.Interns.API.Responses
+﻿namespace Jalasoft.Interns.API.Responses.Employees
 {
-    public class PostEmployeeResponse
+    public class PatchEmployeeResponse
     {
         public int Id { get; set; }
 
@@ -9,7 +9,6 @@
         public string Name { get; set; }
 
         public string LastName { get; set; }
-
 
         public string Email { get; set; }
 

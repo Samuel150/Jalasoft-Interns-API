@@ -7,5 +7,7 @@ namespace Jalasoft.Interns.Service.RepositoryInterfaces
         public IEnumerable<Employee> RetrieveEmployees(bool active);
 
         public Employee CreateEmployee(Employee employee);
+
+        public Employee? RetrieveEmployee(int employeeId);
     }
 }

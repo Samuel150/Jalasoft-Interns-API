@@ -18,6 +18,8 @@ namespace Jalasoft.Interns.Repository.Employees
             return employee;
         }
 
+        public Employee? RetrieveEmployee(int employeeId) => Employees.FirstOrDefault(employee => employee.Id == employeeId);
+
         public IEnumerable<Employee> RetrieveEmployees(bool active)
         {
             
