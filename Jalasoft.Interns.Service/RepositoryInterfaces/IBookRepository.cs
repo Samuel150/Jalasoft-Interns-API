@@ -9,5 +9,6 @@ namespace Jalasoft.Interns.Service.RepositoryInterfaces
 
         public Book CreateBook(Book book);
         public Book UpdateBook(Book book);
+        public Book? RetrieveBook(int bookId);
     }
 }

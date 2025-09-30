@@ -10,6 +10,8 @@ using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Employees;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
 using Jalasoft.Interns.Service.Validators.Employees;
+using Jalasoft.Interns.API.Adapters;
+using Jalasoft.Interns.Service.Validators.Books;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,8 +52,11 @@ static void ConfigureIoC(IServiceCollection services)
 
     services.AddScoped<IBookService, BookService>();
     services.AddSingleton<IBookRepository, BookRepository>();
+    services.AddScoped<IBookAdapter, BookAdapter>();
+    services.AddScoped<BookValidator>();
+    services.AddScoped<AuthorValidator>();
 
-  services.AddScoped<ICityService, CityService>();
+    services.AddScoped<ICityService, CityService>();
     services.AddSingleton<ICityRepository, CityRepository>();
     services.AddScoped<ICityAdapter, CityAdapter>();
 }

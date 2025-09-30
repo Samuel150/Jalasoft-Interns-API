@@ -1,10 +1,7 @@
-﻿using Jalasoft.Interns.Service.Domain.Books;
-
-namespace Jalasoft.Interns.API.Responses.Books
+﻿namespace Jalasoft.Interns.Service.Domain.Books
 {
-    public class PostBookResponse
+    public class PatchBook
     {
-        public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Genre { get; set; } = string.Empty;
         public DateOnly PublishDate { get; set; }
