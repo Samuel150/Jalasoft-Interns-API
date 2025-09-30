@@ -1,6 +1,8 @@
-﻿using InternsAPI.Controllers;
-using Jalasoft.Interns.API.Adapter;
+﻿using AutoMapper;
+using InternsAPI.Controllers;
+using Jalasoft.Interns.API.ExceptionHandling;
 using Jalasoft.Interns.API.Requests.Employees;
+using Jalasoft.Interns.API.Responses.Employees;
 using Jalasoft.Interns.Service.Domain.Employees;
 using Jalasoft.Interns.Service.Employees;
 using Microsoft.AspNetCore.JsonPatch;
@@ -13,7 +15,8 @@ namespace Jalasoft.Interns.API.Controllers
     public class EmployeesController(
         ILogger<BooksController> logger,
         IEmployeeService employeeService,
-        IEmployeeAdapter employeeAdapter) : ControllerBase
+        IMapper mapper,
+        ResponseFilter filter) : ControllerBase
     {
         [HttpGet]
         public IActionResult GetEmployees([FromQuery] bool active)
@@ -23,13 +26,28 @@ namespace Jalasoft.Interns.API.Controllers
             return Ok(employees);
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetEmployee(int id)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Retrieving Employees");
+                var employee = employeeService.RetrieveEmployee(id);
+                return Ok(employee);
+            });
+        }
+
 
         [HttpPost]
         public IActionResult PostEmployee([FromBody] PostEmpoyeeRequest request)
         {
-            logger.Log(LogLevel.Information, "Create Employee");
-            var employeeCreated = employeeService.CreateEmployee(employeeAdapter.PostEmployeeRequestToEmployee(request));
-            return Created("", employeeAdapter.EmployeeToPostEmployeeResponse(employeeCreated));
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Create Employee");
+                var employeeCreated = employeeService.CreateEmployee(mapper.Map<Employee>(request));
+                return Created("", mapper.Map<PostEmployeeResponse>(employeeCreated));
+            });
         }
 
         [HttpPatch]
@@ -38,9 +56,12 @@ namespace Jalasoft.Interns.API.Controllers
             [FromBody] JsonPatchDocument<PatchEmployee> patchDocument,
             int id)
         {
-            logger.Log(LogLevel.Information, "Patch Employee");
-            var employeeCreated = employeeService.PatchEmployee(patchDocument, id);
-            return Ok(employeeAdapter.EmployeeToPostEmployeeResponse(employeeCreated));
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Patch Employee");
+                var employeeCreated = employeeService.PatchEmployee(patchDocument, id);
+                return Ok(mapper.Map<PostEmployeeResponse>(employeeCreated));
+            });
         }
     }
 }
