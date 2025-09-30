@@ -47,8 +47,10 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
 
             PatchCity patchCity1 = PatchCityHelper.CityToPatchCity(city);
             patchCity.ApplyTo(patchCity1);
-            _cityRepository.Update(id, PatchCityHelper.PatchCityToCity(patchCity1, id));
-            return PatchCityHelper.PatchCityToCity(patchCity1, id);
+            City updatedCity = PatchCityHelper.PatchCityToCity(patchCity1, id);
+            cityValidator.ValidateAndThrow(updatedCity);
+            _cityRepository.Update(id, updatedCity);
+            return updatedCity;
         }
 
         public City Update(int id, City city)

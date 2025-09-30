@@ -22,6 +22,12 @@ namespace Jalasoft.Interns.API.ExceptionHandling
             });
         }
 
-        ///Http Errors
+        public IActionResult BadRequestJsonPatch(string message)
+        {
+            return new BadRequestObjectResult(new HttpErrorResponse
+            {
+                Message = message
+            });
+        }
     }
 }

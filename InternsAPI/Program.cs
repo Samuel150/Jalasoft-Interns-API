@@ -76,6 +76,7 @@ static void ConfigureResponseHandlers(IServiceCollection services)
 {
     services.AddScoped<IErrorHandler, EmployeeNotFoundExceptionHandler>();
     services.AddScoped<IErrorHandler, CityNotFoundExceptionHandler>();
+    services.AddScoped<IErrorHandler, JsonPatchExceptionHandler>();
 }
 
 static void ConfigureAutoMapper(IServiceCollection services)
