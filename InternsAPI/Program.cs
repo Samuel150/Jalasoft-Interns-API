@@ -76,6 +76,8 @@ static void ConfigureResponseHandlers(IServiceCollection services)
 {
     services.AddScoped<IErrorHandler, EmployeeNotFoundExceptionHandler>();
 
+    services.AddScoped<IErrorHandler, BookNotFoundExceptionHandler>();
+    services.AddScoped<IErrorHandler, ValidationExceptionHandler>();
 }
 
 static void ConfigureAutoMapper(IServiceCollection services)

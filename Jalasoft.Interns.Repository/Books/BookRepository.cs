@@ -1,6 +1,8 @@
 ﻿using Jalasoft.Interns.Service.Domain.Books;
+using Jalasoft.Interns.Service.Exceptions;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
 using System;
+using System.Runtime.Intrinsics.X86;
 
 namespace Jalasoft.Interns.Repository.Books
 {
@@ -46,12 +48,8 @@ namespace Jalasoft.Interns.Repository.Books
         public Book UpdateBook(Book book)
         {
             var existingBook = _books.FirstOrDefault(b => b.Id == book.Id);
-            if (existingBook == null)
-            {
-                throw new KeyNotFoundException($"No se encontró el libro con ID {book.Id}");
-            }
 
-            existingBook.Title = book.Title;
+            existingBook!.Title = book.Title;
             existingBook.Authors = book.Authors;
             existingBook.Genre = book.Genre;
             existingBook.PublishDate = book.PublishDate;
