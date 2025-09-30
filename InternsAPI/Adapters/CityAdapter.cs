@@ -52,7 +52,6 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
-                Hospitals = Enumerable.Empty<Hospital>(),
 
             };
         }

@@ -14,7 +14,7 @@ namespace Jalasoft.Interns.Service.Domain.Cities
         public string Country { get; set; } = string.Empty;
         public string Capital { get; set; } = string.Empty;
         public bool Capitalist { get; set; }
-        public IEnumerable<Hospital> Hospitals { get; set;} = Enumerable.Empty<Hospital>();
+        public IList<Hospital> Hospitals { get; set;} 
 
     }
     public class Hospital
