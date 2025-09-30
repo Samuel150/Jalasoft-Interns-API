@@ -12,14 +12,14 @@ namespace Jalasoft.Interns.Repository.Cities
     {
         private readonly Dictionary<int, City> _cities = new Dictionary<int, City>()
         {
-            {1, new City() {Name = "Cochabamba", GPD=1000, Country="Bolivia", Capital="Cochabamba", Capitalist= true, Hospitals = [
+            {1, new City() {Id=1, Name = "Cochabamba", GPD=1000, Country="Bolivia", Capital="Cochabamba", Capitalist= true, Hospitals = [
                 new Hospital(){Id=1, Name="Viedma", Address= "Av. Suecia"},
                 new Hospital(){Id=2, Name="Alamo", Address= "Av. Suecia 2"},
                 ] } },
-            {2, new City() {Name = "Tarija", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true, Hospitals = [
+            {2, new City() {Id=2,Name = "Tarija", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true, Hospitals = [
                 new Hospital(){Id=1, Name="Viedma Tarija", Address= "Av. Suecia"},
                 ] } },
-            {3, new City() {Name = "Pando", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true}}
+            {3, new City() {Id=3,Name = "Pando", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true}}
         };
         private int _nextId = 3;
         public City Create(City city)
