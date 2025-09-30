@@ -2,7 +2,7 @@
 
 namespace Jalasoft.Interns.API.Responses.Books
 {
-    public class PostBookResponse
+    public class PatchBookResponse
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
