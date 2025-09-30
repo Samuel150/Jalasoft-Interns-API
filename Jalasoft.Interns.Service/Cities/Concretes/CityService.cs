@@ -1,7 +1,9 @@
-﻿using Jalasoft.Interns.Service.Cities.Interfaces;
+﻿using FluentValidation;
+using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Domain.Cities;
 using Jalasoft.Interns.Service.PatchHelpers.Cities;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
+using Jalasoft.Interns.Service.Validators.Cities;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
@@ -11,10 +13,11 @@ using System.Threading.Tasks;
 
 namespace Jalasoft.Interns.Service.Cities.Concretes
 {
-    public class CityService(ICityRepository _cityRepository) : ICityService
+    public class CityService(ICityRepository _cityRepository, CityValidator cityValidator) : ICityService
     {
         public City Create(City city)
         {
+            cityValidator.ValidateAndThrow(city);
             return _cityRepository.Create(city);
         }
 

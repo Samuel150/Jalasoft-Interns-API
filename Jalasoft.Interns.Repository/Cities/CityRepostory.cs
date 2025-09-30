@@ -22,9 +22,18 @@ namespace Jalasoft.Interns.Repository.Cities
             {3, new City() {Id=3,Name = "Pando", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true}}
         };
         private int _nextId = 3;
+        private int _nextHospitalId = 0;
         public City Create(City city)
         {
             city.Id = ++_nextId;
+            if (city.Hospitals != null && city.Hospitals.Any())
+            {
+                city.Hospitals = AssignHospitalIds(city.Hospitals);
+            }
+            else
+            {
+                city.Hospitals = new List<Hospital>();
+            }
             _cities.Add(city.Id, city);
             return city;
 
@@ -57,6 +66,15 @@ namespace Jalasoft.Interns.Repository.Cities
             }
             return null;
             
+        }
+        private IList<Hospital> AssignHospitalIds(IList<Hospital> hospitals)
+        {
+            return hospitals.Select(hospital => new Hospital
+            {
+                Id = hospital.Id == 0 ? ++_nextHospitalId : hospital.Id,
+                Name = hospital.Name,
+                Address = hospital.Address
+            }).ToList();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jalasoft.Interns.Service.Domain.Cities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,13 @@ namespace Jalasoft.Interns.API.Requests.Cities
         public string Country { get; set; } = string.Empty;
         public string Capital { get; set; } = string.Empty;
         public bool Capitalist { get; set; }
+        public IList<CreateHospitalRequestDto> Hospitals { get; set; }
 
+
+    }
+    public class CreateHospitalRequestDto
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }

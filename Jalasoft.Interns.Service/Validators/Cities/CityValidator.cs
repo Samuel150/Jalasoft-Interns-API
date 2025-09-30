@@ -107,5 +107,4 @@ namespace Jalasoft.Interns.Service.Validators.Cities
             return hospitalNames.Count() == hospitalNames.Distinct().Count();
         }
     }
-    }
 }

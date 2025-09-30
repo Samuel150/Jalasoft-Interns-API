@@ -52,6 +52,7 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = MapHospitalsFromRequest(city.Hospitals),
 
             };
         }
@@ -68,6 +69,17 @@ namespace Jalasoft.Interns.API.Adapter
                 Capitalist = city.Capitalist,
                 Hospitals = city.Hospitals,
             };
+        }
+        private IList<Hospital> MapHospitalsFromRequest(IList<CreateHospitalRequestDto> hospitals)
+        {
+            if (hospitals == null || !hospitals.Any())
+                return new List<Hospital>();
+
+            return hospitals.Select(h => new Hospital()
+            {
+                Name = h.Name,
+                Address = h.Address
+            }).ToList();
         }
     }
 }
