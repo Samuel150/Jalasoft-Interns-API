@@ -1,4 +1,5 @@
 ﻿using Jalasoft.Interns.Service.Domain.Books;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Jalasoft.Interns.Service.Books
 {
@@ -9,5 +10,6 @@ namespace Jalasoft.Interns.Service.Books
 
         public Book CreateBook(Book book);
         public Book UpdateBook(Book book);
+        public Book PatchBook(JsonPatchDocument<PatchBook> patchDocument, int id);
     }
 }
