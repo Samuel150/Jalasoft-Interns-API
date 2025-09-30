@@ -54,6 +54,7 @@ static void ConfigureIoC(IServiceCollection services)
     services.AddSingleton<IBookRepository, BookRepository>();
     services.AddScoped<IBookAdapter, BookAdapter>();
     services.AddScoped<BookValidator>();
+    services.AddScoped<AuthorValidator>();
 
     services.AddScoped<ICityService, CityService>();
     services.AddSingleton<ICityRepository, CityRepository>();
