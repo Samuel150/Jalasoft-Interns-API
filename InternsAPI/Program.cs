@@ -11,6 +11,7 @@ using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Employees;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
 using Jalasoft.Interns.Service.Validators.Employees;
+using Jalasoft.Interns.Service.Validators.Cities;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using Jalasoft.Interns.API.Adapters;
@@ -65,6 +66,10 @@ static void ConfigureIoC(IServiceCollection services)
     services.AddScoped<ICityService, CityService>();
     services.AddSingleton<ICityRepository, CityRepository>();
     services.AddScoped<ICityAdapter, CityAdapter>();
+    services.AddScoped<CityValidator>();
+    services.AddScoped<HospitalValidator>();
+
+   
 }
 
 static void ConfigureResponseHandlers(IServiceCollection services)

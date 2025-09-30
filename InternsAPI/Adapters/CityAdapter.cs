@@ -6,16 +6,18 @@ namespace Jalasoft.Interns.API.Adapter
 {
     public interface ICityAdapter
     {
-        public City AdaptCityDtoToCity(CityDto city);
-        public CityDto AdaptCityToCityDto(City city);
-        public City AdaptUpdateCityToCity(UpdateCityDto city);
-        public City AdaptCreateCityDtoToCity(CreateCityDto city);
+        public City AdaptCityDtoToCity(DefaultCityResponseDto city);
+        public DefaultCityResponseDto AdaptCityToCityDto(City city);
+        public City AdaptUpdateCityToCity(UpdateCityRequestDto city);
+        public City AdaptCreateCityDtoToCity(CreateCityRequestDto city);
 
     }
     public class CityAdapter : ICityAdapter
     {
-        public City AdaptCityDtoToCity(CityDto city)
+        public City AdaptCityDtoToCity(DefaultCityResponseDto city)
         {
+            Console.WriteLine(city.Id);
+
             return new City()
             {
                 Id = city.Id,
@@ -24,12 +26,13 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist= city.Capitalist,
+                Hospitals = city.Hospitals,
             };
         }
 
-        public CityDto AdaptCityToCityDto(City city)
+        public DefaultCityResponseDto AdaptCityToCityDto(City city)
         {
-            return new CityDto()
+            return new DefaultCityResponseDto()
             {
                 Id = city.Id,
                 Name = city.Name,
@@ -37,9 +40,10 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = city.Hospitals,
             };
         }
-        public City AdaptCreateCityDtoToCity(CreateCityDto city)
+        public City AdaptCreateCityDtoToCity(CreateCityRequestDto city)
         {
             return new City()
             {
@@ -48,10 +52,13 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = MapHospitalsFromRequest(city.Hospitals),
+
             };
         }
 
-        public City AdaptUpdateCityToCity(UpdateCityDto city)
+
+        public City AdaptUpdateCityToCity(UpdateCityRequestDto city)
         {
             return new City()
             {
@@ -60,7 +67,19 @@ namespace Jalasoft.Interns.API.Adapter
                 Country = city.Country,
                 GPD = city.GPD,
                 Capitalist = city.Capitalist,
+                Hospitals = city.Hospitals,
             };
+        }
+        private IList<Hospital> MapHospitalsFromRequest(IList<CreateHospitalRequestDto> hospitals)
+        {
+            if (hospitals == null || !hospitals.Any())
+                return new List<Hospital>();
+
+            return hospitals.Select(h => new Hospital()
+            {
+                Name = h.Name,
+                Address = h.Address
+            }).ToList();
         }
     }
 }

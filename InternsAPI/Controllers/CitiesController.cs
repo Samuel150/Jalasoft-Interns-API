@@ -3,6 +3,7 @@ using Jalasoft.Interns.API.Requests.Cities;
 using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Domain.Cities;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +35,7 @@ namespace Jalasoft.Interns.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostCity([FromBody] CreateCityDto request)
+        public IActionResult PostCity([FromBody] CreateCityRequestDto request)
         {
             logger.Log(LogLevel.Information, "Create Cities");
             var newCity = cityAdapter.AdaptCreateCityDtoToCity(request);
@@ -43,12 +44,21 @@ namespace Jalasoft.Interns.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutCity([FromBody] UpdateCityDto request, [FromQuery] int id)
+        public IActionResult PutCity([FromBody] UpdateCityRequestDto request, int id)
         {
             logger.Log(LogLevel.Information, "Updated Cities");
             var newCity = cityAdapter.AdaptUpdateCityToCity(request);
             var updatedCity = cityService.Update(id, newCity);
             return Ok(cityAdapter.AdaptCityToCityDto(updatedCity));
+        }
+        [HttpPatch("{id}")]
+        public IActionResult PatchCity(
+            [FromBody] JsonPatchDocument<PatchCity> patchCity,
+            int id)
+        {
+            logger.Log(LogLevel.Information, "New city patched");
+            var cityPatched = cityService.Patch(patchCity, id);
+            return Ok(cityAdapter.AdaptCityToCityDto(cityPatched));
         }
     }
 }
