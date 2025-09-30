@@ -1,6 +1,8 @@
 ﻿using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Domain.Cities;
+using Jalasoft.Interns.Service.PatchHelpers.Cities;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,22 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
             return _cityRepository.GetById(id);
         }
 
+        public City Patch(JsonPatchDocument<PatchCity> patchCity, int id)
+        {
+            City? city  = _cityRepository.GetById(id);
+            if (city == null)
+            {
+                throw new KeyNotFoundException();
+            }
+            else
+            {
+                PatchCity patchCity1 = PatchCityHelper.CityToPatchCity(city);
+                patchCity.ApplyTo(patchCity1);
+                _cityRepository.Update(id, PatchCityHelper.PatchCityToCity(patchCity1, id));
+                return PatchCityHelper.PatchCityToCity(patchCity1, id); 
+            }
+        }
+
         public City Update(int id, City city)
         {
             var cityExists = _cityRepository.GetById(id);
@@ -33,7 +51,7 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
             {
                 throw new Exception("The City does not exists");
             }
-            var updatedCity = _cityRepository.Update(id, city);
+            var updatedCity = _cityRepository.Update(id, city);      
             return updatedCity;
         }
     }

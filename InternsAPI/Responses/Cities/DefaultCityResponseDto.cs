@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Jalasoft.Interns.API.Responses.Cities;
 
-public class CityResponseDto
+public class DefaultCityResponseDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
@@ -16,6 +16,4 @@ public class CityResponseDto
     public string Capital { get; set; } = string.Empty;
     public bool Capitalist { get; set; }
     public IEnumerable<Hospital> Hospitals { get; set; } = Enumerable.Empty<Hospital>();
-
-
 }

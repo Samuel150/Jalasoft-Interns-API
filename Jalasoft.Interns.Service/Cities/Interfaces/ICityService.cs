@@ -1,4 +1,5 @@
 ﻿using Jalasoft.Interns.Service.Domain.Cities;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace Jalasoft.Interns.Service.Cities.Interfaces
         public IEnumerable<City> GetAll(bool capitalist);
         public City Create(City city);
         public City Update(int id, City city);
+        public City Patch(JsonPatchDocument<PatchCity> patchCity, int id);
     }
 }

@@ -14,7 +14,7 @@ namespace Jalasoft.Interns.Repository.Cities
         {
             {1, new City() {Name = "Cochabamba", GPD=1000, Country="Bolivia", Capital="Cochabamba", Capitalist= true, Hospitals = [
                 new Hospital(){Id=1, Name="Viedma", Address= "Av. Suecia"},
-                new Hospital(){Id=1, Name="Alamo", Address= "Av. Suecia 2"},
+                new Hospital(){Id=2, Name="Alamo", Address= "Av. Suecia 2"},
                 ] } },
             {2, new City() {Name = "Tarija", GPD=1000, Country="Bolivia", Capital="Cercado", Capitalist= true, Hospitals = [
                 new Hospital(){Id=1, Name="Viedma Tarija", Address= "Av. Suecia"},

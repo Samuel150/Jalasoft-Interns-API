@@ -6,16 +6,18 @@ namespace Jalasoft.Interns.API.Adapter
 {
     public interface ICityAdapter
     {
-        public City AdaptCityDtoToCity(CityResponseDto city);
-        public CityResponseDto AdaptCityToCityDto(City city);
+        public City AdaptCityDtoToCity(DefaultCityResponseDto city);
+        public DefaultCityResponseDto AdaptCityToCityDto(City city);
         public City AdaptUpdateCityToCity(UpdateCityRequestDto city);
         public City AdaptCreateCityDtoToCity(CreateCityRequestDto city);
 
     }
     public class CityAdapter : ICityAdapter
     {
-        public City AdaptCityDtoToCity(CityResponseDto city)
+        public City AdaptCityDtoToCity(DefaultCityResponseDto city)
         {
+            Console.WriteLine(city.Id);
+
             return new City()
             {
                 Id = city.Id,
@@ -28,9 +30,9 @@ namespace Jalasoft.Interns.API.Adapter
             };
         }
 
-        public CityResponseDto AdaptCityToCityDto(City city)
+        public DefaultCityResponseDto AdaptCityToCityDto(City city)
         {
-            return new CityResponseDto()
+            return new DefaultCityResponseDto()
             {
                 Id = city.Id,
                 Name = city.Name,
@@ -54,6 +56,7 @@ namespace Jalasoft.Interns.API.Adapter
 
             };
         }
+
 
         public City AdaptUpdateCityToCity(UpdateCityRequestDto city)
         {

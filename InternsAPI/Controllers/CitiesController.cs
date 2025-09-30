@@ -3,6 +3,7 @@ using Jalasoft.Interns.API.Requests.Cities;
 using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Domain.Cities;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -49,6 +50,15 @@ namespace Jalasoft.Interns.API.Controllers
             var newCity = cityAdapter.AdaptUpdateCityToCity(request);
             var updatedCity = cityService.Update(id, newCity);
             return Ok(cityAdapter.AdaptCityToCityDto(updatedCity));
+        }
+        [HttpPatch("{id}")]
+        public IActionResult PatchCity(
+            [FromBody] JsonPatchDocument<PatchCity> patchCity,
+            int id)
+        {
+            logger.Log(LogLevel.Information, "New city patched");
+            var cityPatched = cityService.Patch(patchCity, id);
+            return Ok(cityAdapter.AdaptCityToCityDto(cityPatched));
         }
     }
 }

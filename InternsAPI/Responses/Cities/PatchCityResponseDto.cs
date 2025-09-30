@@ -1,4 +1,6 @@
-﻿namespace Jalasoft.Interns.API.Responses.Cities
+﻿using Jalasoft.Interns.Service.Domain.Cities;
+
+namespace Jalasoft.Interns.API.Responses.Cities
 {
     public class PatchCityResponseDto
     {
@@ -8,5 +10,6 @@
         public string Country { get; set; } = string.Empty;
         public string Capital { get; set; } = string.Empty;
         public bool Capitalist { get; set; }
+        public IEnumerable<Hospital> Hospitals { get; set; } = Enumerable.Empty<Hospital>();
     }
 }

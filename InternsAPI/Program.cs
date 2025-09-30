@@ -54,4 +54,5 @@ static void ConfigureIoC(IServiceCollection services)
   services.AddScoped<ICityService, CityService>();
     services.AddSingleton<ICityRepository, CityRepository>();
     services.AddScoped<ICityAdapter, CityAdapter>();
+   
 }
