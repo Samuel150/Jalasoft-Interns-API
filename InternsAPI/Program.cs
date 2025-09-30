@@ -75,7 +75,7 @@ static void ConfigureIoC(IServiceCollection services)
 static void ConfigureResponseHandlers(IServiceCollection services)
 {
     services.AddScoped<IErrorHandler, EmployeeNotFoundExceptionHandler>();
-
+    services.AddScoped<IErrorHandler, CityNotFoundExceptionHandler>();
 }
 
 static void ConfigureAutoMapper(IServiceCollection services)

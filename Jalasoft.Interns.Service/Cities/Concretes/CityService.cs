@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Domain.Cities;
+using Jalasoft.Interns.Service.Exceptions;
 using Jalasoft.Interns.Service.PatchHelpers.Cities;
 using Jalasoft.Interns.Service.RepositoryInterfaces;
 using Jalasoft.Interns.Service.Validators.Cities;
@@ -28,23 +29,26 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
 
         public City GetById(int id)
         {
-            return _cityRepository.GetById(id);
+            City? city = _cityRepository.GetById(id);
+            if (city == null)
+            {
+                throw new CityNotFoundException(id);
+            }
+            return city;
         }
 
         public City Patch(JsonPatchDocument<PatchCity> patchCity, int id)
         {
-            City? city  = _cityRepository.GetById(id);
+            City? city = _cityRepository.GetById(id);
             if (city == null)
             {
-                throw new KeyNotFoundException();
+                throw new CityNotFoundException(id);
             }
-            else
-            {
-                PatchCity patchCity1 = PatchCityHelper.CityToPatchCity(city);
-                patchCity.ApplyTo(patchCity1);
-                _cityRepository.Update(id, PatchCityHelper.PatchCityToCity(patchCity1, id));
-                return PatchCityHelper.PatchCityToCity(patchCity1, id); 
-            }
+
+            PatchCity patchCity1 = PatchCityHelper.CityToPatchCity(city);
+            patchCity.ApplyTo(patchCity1);
+            _cityRepository.Update(id, PatchCityHelper.PatchCityToCity(patchCity1, id));
+            return PatchCityHelper.PatchCityToCity(patchCity1, id);
         }
 
         public City Update(int id, City city)
@@ -52,9 +56,11 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
             var cityExists = _cityRepository.GetById(id);
             if (cityExists == null)
             {
-                throw new Exception("The City does not exists");
+                throw new CityNotFoundException(id);
             }
-            var updatedCity = _cityRepository.Update(id, city);      
+
+            cityValidator.ValidateAndThrow(city);
+            var updatedCity = _cityRepository.Update(id, city);
             return updatedCity;
         }
     }
