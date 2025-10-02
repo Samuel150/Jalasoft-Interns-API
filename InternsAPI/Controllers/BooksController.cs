@@ -1,6 +1,7 @@
-using Jalasoft.Interns.API.Adapters;
+using AutoMapper;
 using Jalasoft.Interns.API.ExceptionHandling;
 using Jalasoft.Interns.API.Requests.Books;
+using Jalasoft.Interns.API.Responses.Books;
 using Jalasoft.Interns.Service.Books;
 using Jalasoft.Interns.Service.Domain.Books;
 using Microsoft.AspNetCore.JsonPatch;
@@ -13,7 +14,7 @@ namespace InternsAPI.Controllers
     public class BooksController(
         ILogger<BooksController> logger, 
         IBookService bookService,
-        IBookAdapter bookAdapter,
+        IMapper mapper,
         ResponseFilter filter ) : ControllerBase
     {
         [HttpGet]
@@ -46,8 +47,8 @@ namespace InternsAPI.Controllers
             return filter.Excecute(() =>
             {
                 logger.Log(LogLevel.Information, "Create Book");
-                var bookCreated = bookService.CreateBook(bookAdapter.PostBookRequestToBook(request));
-                return Created("", bookAdapter.BookToPostBookResponse(bookCreated));
+                var bookCreated = bookService.CreateBook(mapper.Map<Book>(request));
+                return Created("", mapper.Map<PostBookResponse>(bookCreated));
             });
         }
 
@@ -58,11 +59,11 @@ namespace InternsAPI.Controllers
             {
                 logger.Log(LogLevel.Information, $"Updating Book with ID {id}");
 
-                var bookToUpdate = bookAdapter.PutBookRequestToBook(request);
+                var bookToUpdate = mapper.Map<Book>(request);
                 bookToUpdate.Id = id;
 
                 var updatedBook = bookService.UpdateBook(bookToUpdate);
-                return Ok(bookAdapter.BookToPutBookResponse(updatedBook));
+                return Ok(mapper.Map<PutBookResponse>(updatedBook));
             });
         }
         [HttpPatch]
@@ -75,7 +76,7 @@ namespace InternsAPI.Controllers
             {
                 logger.Log(LogLevel.Information, "Patch Book");
                 var bookCreated = bookService.PatchBook(patchDocument, id);
-                return Ok(bookAdapter.BookToPostBookResponse(bookCreated));
+                return Ok(mapper.Map<PostBookResponse>(bookCreated));
             });
         }
 
