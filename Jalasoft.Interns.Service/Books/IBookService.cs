@@ -10,6 +10,7 @@ namespace Jalasoft.Interns.Service.Books
 
         public Book CreateBook(Book book);
         public Book UpdateBook(Book book);
+        public Book RetrieveBookById(int id);
         public Book PatchBook(JsonPatchDocument<PatchBook> patchDocument, int id);
     }
 }

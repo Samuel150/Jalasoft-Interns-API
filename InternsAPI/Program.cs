@@ -14,7 +14,6 @@ using Jalasoft.Interns.Service.Validators.Employees;
 using Jalasoft.Interns.Service.Validators.Cities;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
-using Jalasoft.Interns.API.Adapters;
 using Jalasoft.Interns.Service.Validators.Books;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,7 +58,6 @@ static void ConfigureIoC(IServiceCollection services)
 
     services.AddScoped<IBookService, BookService>();
     services.AddSingleton<IBookRepository, BookRepository>();
-    services.AddScoped<IBookAdapter, BookAdapter>();
     services.AddScoped<BookValidator>();
     services.AddScoped<AuthorValidator>();
 
@@ -76,6 +74,8 @@ static void ConfigureResponseHandlers(IServiceCollection services)
 {
     services.AddScoped<IErrorHandler, EmployeeNotFoundExceptionHandler>();
 
+    services.AddScoped<IErrorHandler, BookNotFoundExceptionHandler>();
+    services.AddScoped<IErrorHandler, ValidationExceptionHandler>();
 }
 
 static void ConfigureAutoMapper(IServiceCollection services)
