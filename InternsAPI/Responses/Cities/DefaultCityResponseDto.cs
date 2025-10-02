@@ -17,3 +17,9 @@ public class DefaultCityResponseDto
     public bool Capitalist { get; set; }
     public IList<Hospital> Hospitals { get; set; }
 }
+public class HospitalResponseDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+}

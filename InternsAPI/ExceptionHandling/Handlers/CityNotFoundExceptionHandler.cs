@@ -7,7 +7,7 @@ namespace Jalasoft.Interns.API.ExceptionHandling.Handlers
         public override void Handle(ErrorHandlerContext context)
         {
             if (context.Exception is CityNotFoundException ex)
-            {
+            {   
                 context.Handled = true;
                 context.Result = NotFound(ex.Message);
             }

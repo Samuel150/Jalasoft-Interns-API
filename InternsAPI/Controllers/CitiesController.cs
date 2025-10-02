@@ -78,5 +78,41 @@ namespace Jalasoft.Interns.API.Controllers
                 return Ok(cityAdapter.AdaptCityToCityDto(cityPatched));
             });
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCity(int id)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, $"Deleting city with id: {id}");
+                cityService.Delete(id);
+                return NoContent();
+            });
+        }
+
+        [HttpGet("{cityId}/hospitals")]
+        public IActionResult GetHospitalsByCity(int cityId)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, $"Retrieving hospitals for city: {cityId}");
+                var hospitals = cityService.GetHospitalsByCityId(cityId);
+                var hospitalDtos = cityAdapter.AdaptHospitalsToHospitalDtos(hospitals);
+                return Ok(hospitalDtos);
+            });
+        }
+
+        [HttpPost("{cityId}/hospitals")]
+        public IActionResult PostHospital(int cityId, [FromBody] CreateHospitalRequestDto request)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, $"Adding hospital to city: {cityId}");
+                var hospital = cityAdapter.AdaptCreateHospitalDtoToHospital(request);
+                var createdHospital = cityService.AddHospital(cityId, hospital);
+                var hospitalDto = cityAdapter.AdaptHospitalToHospitalDto(createdHospital);
+                return Created("", hospitalDto);
+            });
+        }
     }
 }
