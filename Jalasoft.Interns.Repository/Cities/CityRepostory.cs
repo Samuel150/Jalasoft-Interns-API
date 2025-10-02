@@ -76,5 +76,50 @@ namespace Jalasoft.Interns.Repository.Cities
                 Address = hospital.Address
             }).ToList();
         }
+        public bool Delete(int id)
+        {
+            if (_cities.ContainsKey(id))
+            {
+                return _cities.Remove(id);
+            }
+            return false;
+        }
+
+        public Hospital AddHospital(int cityId, Hospital hospital)
+        {
+            if (_cities.TryGetValue(cityId, out City city))
+            {
+                if (city.Hospitals == null)
+                {
+                    city.Hospitals = new List<Hospital>();
+                }
+
+                hospital.Id = ++_nextHospitalId;
+                city.Hospitals.Add(hospital);
+                return hospital;
+            }
+            return null;
+        }
+
+        public Hospital GetHospitalById(int cityId, int hospitalId)
+        {
+            if (_cities.TryGetValue(cityId, out City city))
+            {
+                if (city.Hospitals != null)
+                {
+                    return city.Hospitals.FirstOrDefault(h => h.Id == hospitalId);
+                }
+            }
+            return null;
+        }
+
+        public List<Hospital> GetHospitalsByCityId(int cityId)
+        {
+            if (_cities.TryGetValue(cityId, out City city))
+            {
+                return city.Hospitals?.ToList() ?? new List<Hospital>();
+            }
+            return null;
+        }
     }
 }

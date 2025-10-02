@@ -18,7 +18,7 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
     {
         public City Create(City city)
         {
-            cityValidator.ValidateAndThrow(city);
+            //cityValidator.ValidateAndThrow(city);
             return _cityRepository.Create(city);
         }
 
@@ -64,6 +64,40 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
             cityValidator.ValidateAndThrow(city);
             var updatedCity = _cityRepository.Update(id, city);
             return updatedCity;
+        }
+        public void Delete(int id)
+        {
+            var city = _cityRepository.GetById(id);
+            if (city == null)
+            {
+                throw new CityNotFoundException(id);
+            }
+
+            _cityRepository.Delete(id);
+        }
+
+        public Hospital AddHospital(int cityId, Hospital hospital)
+        {
+            var city = _cityRepository.GetById(cityId);
+            if (city == null)
+            {
+                throw new CityNotFoundException(cityId);
+            }
+
+            var addedHospital = _cityRepository.AddHospital(cityId, hospital);
+            return addedHospital;
+        }
+
+        public IEnumerable<Hospital> GetHospitalsByCityId(int cityId)
+        {
+            var city = _cityRepository.GetById(cityId);
+            if (city == null)
+            {
+                throw new CityNotFoundException(cityId);
+            }
+
+            var hospitals = _cityRepository.GetHospitalsByCityId(cityId);
+            return hospitals ?? new List<Hospital>();
         }
     }
 }
