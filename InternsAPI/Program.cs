@@ -75,6 +75,9 @@ static void ConfigureIoC(IServiceCollection services)
 static void ConfigureResponseHandlers(IServiceCollection services)
 {
     services.AddScoped<IErrorHandler, EmployeeNotFoundExceptionHandler>();
+    services.AddScoped<IErrorHandler, CityNotFoundExceptionHandler>();
+    services.AddScoped<IErrorHandler, JsonPatchExceptionHandler>();
+    services.AddScoped<IErrorHandler, HospitalNotFoundExceptionHandler>();
 
 }
 

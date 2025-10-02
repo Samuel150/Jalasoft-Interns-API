@@ -14,7 +14,12 @@ namespace Jalasoft.Interns.API.Requests.Cities
         public string Country { get; set; } = string.Empty;
         public string Capital { get; set; } = string.Empty;
         public bool Capitalist { get; set; }
-        public IList<Hospital> Hospitals { get; set; }
+        public IList<UpdateHospitalRequestDto> Hospitals { get; set; }
 
+    }
+    public class UpdateHospitalRequestDto
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }

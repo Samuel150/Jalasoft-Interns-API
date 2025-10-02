@@ -1,4 +1,5 @@
 ﻿using Jalasoft.Interns.API.Adapter;
+using Jalasoft.Interns.API.ExceptionHandling;
 using Jalasoft.Interns.API.Requests.Cities;
 using Jalasoft.Interns.Service.Cities.Interfaces;
 using Jalasoft.Interns.Service.Domain.Cities;
@@ -15,50 +16,103 @@ namespace Jalasoft.Interns.API.Controllers
     public class CitiesController(
         ILogger<CitiesController> logger,
         ICityAdapter cityAdapter,
-        ICityService cityService) : ControllerBase
+        ICityService cityService,
+        ResponseFilter filter) : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetCitites([FromQuery] bool capitalist)
+        public IActionResult GetCities([FromQuery] bool capitalist)
         {
-            logger.Log(LogLevel.Information, "Retrieving Cities");
-            var cities = cityService.GetAll(capitalist);
-            return Ok(cities);
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Retrieving Cities");
+                var cities = cityService.GetAll(capitalist);
+                return Ok(cities);
+            });
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetCity(int id)
         {
-            logger.Log(LogLevel.Information, "Retrieving City");
-            var city = cityService.GetById(id);
-            return Ok(cityAdapter.AdaptCityToCityDto(city));
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Retrieving City");
+                var city = cityService.GetById(id);
+                return Ok(cityAdapter.AdaptCityToCityDto(city));
+            });
         }
 
         [HttpPost]
         public IActionResult PostCity([FromBody] CreateCityRequestDto request)
         {
-            logger.Log(LogLevel.Information, "Create Cities");
-            var newCity = cityAdapter.AdaptCreateCityDtoToCity(request);
-            var createdCity = cityService.Create(newCity);
-            return Created("", cityAdapter.AdaptCityToCityDto(createdCity));
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Create Cities");
+                var newCity = cityAdapter.AdaptCreateCityDtoToCity(request);
+                var createdCity = cityService.Create(newCity);
+                return Created("", cityAdapter.AdaptCityToCityDto(createdCity));
+            });
         }
 
         [HttpPut("{id}")]
         public IActionResult PutCity([FromBody] UpdateCityRequestDto request, int id)
         {
-            logger.Log(LogLevel.Information, "Updated Cities");
-            var newCity = cityAdapter.AdaptUpdateCityToCity(request);
-            var updatedCity = cityService.Update(id, newCity);
-            return Ok(cityAdapter.AdaptCityToCityDto(updatedCity));
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "Updated Cities");
+                var newCity = cityAdapter.AdaptUpdateCityToCity(request);
+                var updatedCity = cityService.Update(id, newCity);
+                return Ok(cityAdapter.AdaptCityToCityDto(updatedCity));
+            });
         }
+
         [HttpPatch("{id}")]
         public IActionResult PatchCity(
             [FromBody] JsonPatchDocument<PatchCity> patchCity,
             int id)
         {
-            logger.Log(LogLevel.Information, "New city patched");
-            var cityPatched = cityService.Patch(patchCity, id);
-            return Ok(cityAdapter.AdaptCityToCityDto(cityPatched));
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, "New city patched");
+                var cityPatched = cityService.Patch(patchCity, id);
+                return Ok(cityAdapter.AdaptCityToCityDto(cityPatched));
+            });
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCity(int id)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, $"Deleting city with id: {id}");
+                cityService.Delete(id);
+                return NoContent();
+            });
+        }
+
+        [HttpGet("{cityId}/hospitals")]
+        public IActionResult GetHospitalsByCity(int cityId)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, $"Retrieving hospitals for city: {cityId}");
+                var hospitals = cityService.GetHospitalsByCityId(cityId);
+                var hospitalDtos = cityAdapter.AdaptHospitalsToHospitalDtos(hospitals);
+                return Ok(hospitalDtos);
+            });
+        }
+
+        [HttpPost("{cityId}/hospitals")]
+        public IActionResult PostHospital(int cityId, [FromBody] CreateHospitalRequestDto request)
+        {
+            return filter.Excecute(() =>
+            {
+                logger.Log(LogLevel.Information, $"Adding hospital to city: {cityId}");
+                var hospital = cityAdapter.AdaptCreateHospitalDtoToHospital(request);
+                var createdHospital = cityService.AddHospital(cityId, hospital);
+                var hospitalDto = cityAdapter.AdaptHospitalToHospitalDto(createdHospital);
+                return Created("", hospitalDto);
+            });
         }
     }
 }
