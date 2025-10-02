@@ -33,7 +33,7 @@ namespace Jalasoft.Interns.API.ExceptionHandling
                 {
                     ObjectResult objectResult = new ObjectResult(new HttpErrorResponse
                     {
-                        Message = "Oops, something went wrong."
+                        Message = ex.Message
                     });
                     objectResult.StatusCode = 500;
                     errorHandlerContext.Result = objectResult;

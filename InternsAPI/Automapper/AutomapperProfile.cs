@@ -24,8 +24,12 @@ namespace Jalasoft.Interns.API.Automapper
             CreateMap<PatchEmployee, Employee>()
                 .ReverseMap();
 
-            CreateMap<CreateHospitalRequestDto, Hospital>();
-            CreateMap<Hospital, HospitalResponseDto>();
+            CreateMap<CreateHospitalRequestDto, Hospital>().ReverseMap();
+            CreateMap<Hospital, HospitalResponseDto>().ReverseMap();
+            CreateMap<UpdateHospitalRequestDto, Hospital>().ReverseMap();
+            CreateMap<UpdateCityRequestDto, City>().ReverseMap();
+            CreateMap<City, CityResponseDto>().ReverseMap();
+            CreateMap<CreateCityRequestDto, City>().ReverseMap();
         }
     }
 }

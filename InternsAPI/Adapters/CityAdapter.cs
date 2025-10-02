@@ -7,13 +7,13 @@ namespace Jalasoft.Interns.API.Adapter
 {
     public interface ICityAdapter
     {
-        public City AdaptCityDtoToCity(DefaultCityResponseDto city);
-        public DefaultCityResponseDto AdaptCityToCityDto(City city);
+        public City AdaptCityDtoToCity(CityResponseDto city);
+        public CityResponseDto AdaptCityToCityDto(City city);
         public City AdaptUpdateCityToCity(UpdateCityRequestDto city);
         public City AdaptCreateCityDtoToCity(CreateCityRequestDto city);
-        Hospital AdaptCreateHospitalDtoToHospital(CreateHospitalRequestDto createHospitalRequestDto);
-        HospitalResponseDto AdaptHospitalToHospitalDto(Hospital hospital);
-        IEnumerable<HospitalResponseDto> AdaptHospitalsToHospitalDtos(IEnumerable<Hospital> hospitals);
+        public Hospital AdaptCreateHospitalDtoToHospital(CreateHospitalRequestDto createHospitalRequestDto);
+        public HospitalResponseDto AdaptHospitalToHospitalDto(Hospital hospital);
+        public IEnumerable<HospitalResponseDto> AdaptHospitalsToHospitalDtos(IEnumerable<Hospital> hospitals);
 
     }
     public class CityAdapter : ICityAdapter
@@ -24,61 +24,24 @@ namespace Jalasoft.Interns.API.Adapter
         {
             _mapper = mapper;
         }
-        public City AdaptCityDtoToCity(DefaultCityResponseDto city)
+        public City AdaptCityDtoToCity(CityResponseDto city)
         {
-            Console.WriteLine(city.Id);
-
-            return new City()
-            {
-                Id = city.Id,
-                Name = city.Name,
-                Capital = city.Capital,
-                Country = city.Country,
-                GPD = city.GPD,
-                Capitalist= city.Capitalist,
-                Hospitals = city.Hospitals,
-            };
+            return _mapper.Map<City>(city);
         }
 
-        public DefaultCityResponseDto AdaptCityToCityDto(City city)
+        public CityResponseDto AdaptCityToCityDto(City city)
         {
-            return new DefaultCityResponseDto()
-            {
-                Id = city.Id,
-                Name = city.Name,
-                Capital = city.Capital,
-                Country = city.Country,
-                GPD = city.GPD,
-                Capitalist = city.Capitalist,
-                Hospitals = city.Hospitals,
-            };
+            return _mapper.Map<CityResponseDto>(city);
         }
         public City AdaptCreateCityDtoToCity(CreateCityRequestDto city)
         {
-            return new City()
-            {
-                Name = city.Name,
-                Capital = city.Capital,
-                Country = city.Country,
-                GPD = city.GPD,
-                Capitalist = city.Capitalist,
-                Hospitals = MapHospitalsFromRequest(city.Hospitals),
-
-            };
+            return _mapper.Map<City>(city); 
         }
 
 
         public City AdaptUpdateCityToCity(UpdateCityRequestDto city)
         {
-            return new City()
-            {
-                Name = city.Name,
-                Capital = city.Capital,
-                Country = city.Country,
-                GPD = city.GPD,
-                Capitalist = city.Capitalist,
-                Hospitals = city.Hospitals,
-            };
+            return _mapper.Map<City>(city);
         }
 
         public Hospital AdaptCreateHospitalDtoToHospital(CreateHospitalRequestDto createHospitalRequestDto)
@@ -94,17 +57,6 @@ namespace Jalasoft.Interns.API.Adapter
         public IEnumerable<HospitalResponseDto> AdaptHospitalsToHospitalDtos(IEnumerable<Hospital> hospitals)
         {
             return hospitals.Select(h => _mapper.Map<HospitalResponseDto>(h));
-        }
-        private IList<Hospital> MapHospitalsFromRequest(IList<CreateHospitalRequestDto> hospitals)
-        {
-            if (hospitals == null || !hospitals.Any())
-                return new List<Hospital>();
-
-            return hospitals.Select(h => new Hospital()
-            {
-                Name = h.Name,
-                Address = h.Address
-            }).ToList();
         }
     }
 }

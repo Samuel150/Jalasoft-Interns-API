@@ -48,7 +48,7 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
             PatchCity patchCity1 = PatchCityHelper.CityToPatchCity(city);
             patchCity.ApplyTo(patchCity1);
             City updatedCity = PatchCityHelper.PatchCityToCity(patchCity1, id);
-            cityValidator.ValidateAndThrow(updatedCity);
+            //cityValidator.ValidateAndThrow(updatedCity);
             _cityRepository.Update(id, updatedCity);
             return updatedCity;
         }
@@ -61,7 +61,7 @@ namespace Jalasoft.Interns.Service.Cities.Concretes
                 throw new CityNotFoundException(id);
             }
 
-            cityValidator.ValidateAndThrow(city);
+            //cityValidator.ValidateAndThrow(city);
             var updatedCity = _cityRepository.Update(id, city);
             return updatedCity;
         }
